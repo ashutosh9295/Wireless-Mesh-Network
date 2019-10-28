@@ -19,12 +19,13 @@
 #include "common.h"
 
 extern SPI_HandleTypeDef hspi3;
-uint8_t pTxData;
-uint8_t rTxData; 
 
 uint8_t hal_nrf_rw(uint8_t value)
 {
-  return HAL_SPI_TransmitReceive(hspi3, uint8_t *pTxData, uint8_t *pRxData, 1, 1000);
+  uint8_t RxData;
+  HAL_SPI_TransmitReceive(&hspi3, &value, &RxData, 1, 1000);
+  
+  return RxData;
 }
 //hal_spi_master_read_write(value); // replace with the hal spi read write function
 
