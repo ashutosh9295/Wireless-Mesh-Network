@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include "main.h"
 #include "common.h"
 #include "hal_nrf_hw.h"
@@ -26,24 +27,21 @@ void receiveDataPacket(uint8_t *packet)
 
 ParserReturnVal_t CmdSendPacket(int mode)
 {
-  uint32_t len, length, rc, data;
+  char rc, *data;
+  uint8_t length;
   
   if(mode != CMD_INTERACTIVE) return CmdReturnOk;
 
-  len = fetch_uint32_arg(&length);
-  if(len) {
-    printf("Must specify length value to the user\n");
-    return CmdReturnBadParameter1;
-  }
-
-  rc = fetch_uint32_arg(&data);
+  rc = fetch_cmd_args(&data);
   if(rc) {
     printf("Must specify data value to the user\n");
     return CmdReturnBadParameter1;
   }
 
-  sendDataPacket(*data, len);
-  receiveDataPacket(*data);
+  length = strlen(data);
+  uint8_t dataPacket = atoi(data);
+  sendDataPacket(&dataPacket, length);
+  receiveDataPacket(&dataPacket);
   
   return CmdReturnOk;
 }
