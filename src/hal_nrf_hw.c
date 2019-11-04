@@ -27,6 +27,3 @@ uint8_t hal_nrf_rw(uint8_t value)
   
   return RxData;
 }
-//hal_spi_master_read_write(value); // replace with the hal spi read write function
-
-

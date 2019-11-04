@@ -207,6 +207,17 @@ typedef enum {
     HAL_NRF_AW_5BYTES           /**< Set address width to 5 bytes */
 } hal_nrf_address_width_t;
 
+/** Enumerates the different states the radio may
+ * be in.
+ */
+typedef enum {
+  RF_IDLE,    /**< Radio is idle */
+  RF_MAX_RT,  /**< Maximum number of retries have occured */
+  RF_TX_DS,   /**< Data is sent */
+  RF_RX_DR,   /**< Data recieved */
+  RF_TX_AP,   /**< Ack payload recieved */
+  RF_BUSY     /**< Radio is busy */
+} radio_status_t;
 
 /** @name CONFIG register bit definitions */
 //@{

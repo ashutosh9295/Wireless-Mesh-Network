@@ -157,6 +157,8 @@ void DFUStart(void);
 void my_Loop(void);
 void my_Init(void);
 
+void timerInit(void);
+void timerDelay(void);
 
 #endif
 

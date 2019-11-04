@@ -9,20 +9,14 @@
 
 void sendDataPacket(uint8_t *packet, uint8_t packetLength)
 {
-  CSN_HIGH();
-  CSN_LOW();
   hal_nrf_write_tx_pload(packet, packetLength);
-  CSN_HIGH();
-
+  CE_PULSE();
 }
 
 void receiveDataPacket(uint8_t *packet)
 {
-    CSN_HIGH();
-    CSN_LOW();
     hal_nrf_read_rx_pload(packet);
-    CSN_HIGH();
-
+    CE_PULSE();
 }
 
 ParserReturnVal_t CmdSendPacket(int mode)
