@@ -35,9 +35,29 @@ ParserReturnVal_t CmdSendPacket(int mode)
   length = strlen(data);
   uint8_t dataPacket = atoi(data);
   sendDataPacket(&dataPacket, length);
-  receiveDataPacket(&dataPacket);
   
   return CmdReturnOk;
 }
 
 ADD_CMD("sendPacket",CmdSendPacket,"Send packet parameters")
+
+ParserReturnVal_t CmdReceivePacket(int mode)
+{
+  char rc, *data;
+  //uint8_t length;
+  
+  if(mode != CMD_INTERACTIVE) return CmdReturnOk;
+
+  rc = fetch_cmd_args(&data);
+  if(rc) {
+    printf("Must specify data value to the user\n");
+    return CmdReturnBadParameter1;
+  }
+
+  uint8_t dataPacket = atoi(data);
+  receiveDataPacket(&dataPacket);
+  
+  return CmdReturnOk;
+}
+
+ADD_CMD("receivePacket",CmdReceivePacket,"Send packet parameters")

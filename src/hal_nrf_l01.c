@@ -125,7 +125,7 @@ void hal_nrf_close_pipe(hal_nrf_address_t pipe_num)
   }
 }
 
-void hal_nrf_set_address(hal_nrf_address_t address, uint8_t *addr)
+void hal_nrf_set_address(hal_nrf_address_t address, const uint8_t *addr)
 {
   switch(address)
   {
@@ -564,7 +564,7 @@ uint8_t ctr, length;
   return (((uint16_t) reg << 8) | length);
 }
 
-void hal_nrf_write_multibyte_reg(uint8_t reg, uint8_t *pbuf, uint8_t length)
+void hal_nrf_write_multibyte_reg(const uint8_t reg, const uint8_t *pbuf, uint8_t length)
 {
   switch(reg)
   {

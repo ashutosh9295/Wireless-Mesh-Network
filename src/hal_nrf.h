@@ -146,14 +146,14 @@ void hal_nrf_close_pipe(hal_nrf_address_t pipe_num);
  * @param address Which address to set
  * @param *addr Buffer from which the address is stored in
 */
-void hal_nrf_set_address(hal_nrf_address_t address, uint8_t *addr);
+void hal_nrf_set_address(hal_nrf_address_t address, const uint8_t *addr);
 
 /** Set auto acknowledge parameters.
  * Use this function to set retransmit and retransmit delay
  * parameters.
  *
  * @param retr Number of retransmit, 0 equ retransmit OFF
- * @param delay Retransmit delay in µs
+ * @param delay Retransmit delay in ï¿½s
 */
 void hal_nrf_set_auto_retr(uint8_t retr, uint16_t delay);
 
@@ -606,7 +606,7 @@ uint16_t hal_nrf_read_multibyte_reg(uint8_t reg, uint8_t *pbuf);
  * @param *pbuf pointer to buffer in which data to write is
  * @param length \# of bytes to write
 */
-void hal_nrf_write_multibyte_reg(uint8_t reg, uint8_t *pbuf, uint8_t length);
+void hal_nrf_write_multibyte_reg(const uint8_t reg, const uint8_t *pbuf, uint8_t length);
 
 
 /** Basis function, nrf_rw

@@ -8,15 +8,16 @@
 #include "hal_nrf_reg.h"
 #include "target_includes.h"
 
-
-// void start_timer (uint16_t time);
-// void wait_for_timer (void);
-// static void run_timer (uint16_t time);
+static const uint8_t address[HAL_NRF_AW_5BYTES] = {0x22,0x33, 0x44,0x55,0x01};
 void radio_set_status (radio_status_t new_status);
 
 static radio_status_t status;
-// static uint8_t timer_rounds;
 
+// userFun()
+// {
+//   uint8_t addr = {}
+//   radio_init(addr, mode)
+// }
 
 void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode)
 {
@@ -55,9 +56,6 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
                                                  // compatibility with nRF2401 
                                                  // and nRF24E1
 
-//   start_timer(2);                // Wait for the radio to 
-//   wait_for_timer();                              // power up
-
   radio_set_status (RF_IDLE);                    // Radio now ready
 }                                                
 
@@ -68,22 +66,22 @@ void radio_set_status (radio_status_t new_status)
 
 ParserReturnVal_t CmdRadioInit(int mode)
 {
-  char opMode;
-  uint8_t rc, rc1, length, address;
+  char opMode = '\0';
+  int rc;
+  uint16_t length;
   
   if(mode != CMD_INTERACTIVE) return CmdReturnOk;
-
-  rc = fetch_uint8_args(&length);
+    rc = fetch_uint16_arg(&length);
   if(rc) {
     printf("Must specify data value to the user\n");
     return CmdReturnBadParameter1;
   }
 
-  rc1 = fetch_uint8_args(&address);
-  if(rc) {
-    printf("Must specify data value to the user\n");
-    return CmdReturnBadParameter1;
-  }
+  // //rc1 = fetch_uint8_args(&address);
+  // if(rc) {
+  //   printf("Must specify data value to the user\n");
+  //   return CmdReturnBadParameter1;
+  // }
   if (length == 0){
       opMode = HAL_NRF_PTX;
   }
@@ -92,79 +90,10 @@ ParserReturnVal_t CmdRadioInit(int mode)
   }
 
   radio_init(address, opMode);
+  printf("Radio Initialised\n");
   
   return CmdReturnOk;
 }
 
 ADD_CMD("radioInit",CmdRadioInit,"Initialise Radio, set 0 for transmission or 1 for receive")
 
-// void start_timer (uint16_t time)
-// {
-//   uint16_t setuptime;
-//   uint16_t firstruntime;
-
-//   firstruntime = (uint16_t)(time % 40);
-
-//   setuptime = 0 - (firstruntime * 1333);
-//   time -= firstruntime;
-//   timer_rounds = (uint8_t)(time / 40) + 1;
-
-//   if (setuptime == 0)
-//   {
-//     setuptime = MAX_TIME;
-//     timer_rounds--;
-//   }
-
-//   run_timer (setuptime);
-// }
-
-// static void run_timer (uint16_t time)
-// {
-//   if (time != 0)
-//   {
-//     T1_MODE1(); // Setting up mode 1 on timer 1 (16-bit timer) 
-//     T1_SET_LB((uint8_t)time);
-//     T1_SET_HB((uint8_t)(time >> 8));
-//     T1_START();
-//   }
-// }
-
-// void wait_for_timer (void)
-// {
-//   while (timer_rounds > 0)
-//   {
-//     while (!TIMER1_OVERFLOW())
-//       ;
-
-//     timer_rounds--;
-
-//     if (timer_rounds > 0)
-//     {
-//       run_timer (MAX_TIME);
-//     }
-//   }
-
-//   T1_STOP();
-// }
-
-// bool timer_done (void)
-// {
-//   bool retval = false;
-
-//   if (TIMER1_OVERFLOW())
-//   {
-//     timer_rounds--;
-
-//     if (timer_rounds > 0)
-//     {
-//       run_timer (MAX_TIME);
-//     }
-//     else
-//     {
-//       retval = true;
-//       T1_STOP();
-//     }
-//   }
-
-//   return retval;
-// }

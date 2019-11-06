@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <time.h>
+#include "hal_nrf_reg.h"
 
 
 /* Include HAL definitions */
@@ -159,6 +160,8 @@ void my_Init(void);
 
 void timerInit(void);
 void timerDelay(void);
+
+void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode);
 
 #endif
 
