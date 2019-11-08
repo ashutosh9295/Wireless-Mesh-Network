@@ -22,7 +22,7 @@ void receiveDataPacket(uint8_t *packet)
 
 ParserReturnVal_t CmdSendPacket(int mode)
 {
-  char rc, *data;
+   char rc, *data;
   uint8_t length;
   
   if(mode != CMD_INTERACTIVE) return CmdReturnOk;
@@ -35,14 +35,9 @@ ParserReturnVal_t CmdSendPacket(int mode)
 
 
   length = strlen(data);
-  uint8_t *dataPacket = (uint8_t *)malloc(length);
-  for (int i = 0; i < length; i++){
-    dataPacket[i] = (uint8_t)data[i]; 
-  }
   
-  sendDataPacket(dataPacket, length);
+  sendDataPacket((uint8_t*)data, length);
   printf("Data = %s %i\n\r", data, length);
-  free(dataPacket);
   return CmdReturnOk;
 }
 
@@ -55,12 +50,7 @@ ParserReturnVal_t CmdReceivePacket(int mode)
   
   if(mode != CMD_INTERACTIVE) return CmdReturnOk;
 
-  // rc = fetch_cmd_args(&data);
-  // if(rc) {
-  //   printf("Must specify data value to the user\n");
-  //   return CmdReturnBadParameter1;
-  // }
-
+// create a for loop here
   receiveDataPacket(rxData_P);
   printf("rx = %i", rxData_P[0]);
   return CmdReturnOk;

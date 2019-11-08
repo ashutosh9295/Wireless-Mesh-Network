@@ -13,12 +13,6 @@ void radio_set_status (radio_status_t new_status);
 
 static radio_status_t status;
 
-// userFun()
-// {
-//   uint8_t addr = {}
-//   radio_init(addr, mode)
-// }
-
 void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode)
 {
   hal_nrf_close_pipe(HAL_NRF_ALL);               // First close all radio pipes
@@ -77,11 +71,6 @@ ParserReturnVal_t CmdRadioInit(int mode)
     return CmdReturnBadParameter1;
   }
 
-  // //rc1 = fetch_uint8_args(&address);
-  // if(rc) {
-  //   printf("Must specify data value to the user\n");
-  //   return CmdReturnBadParameter1;
-  // }
   if (length == 0){
       opMode = HAL_NRF_PTX;
   }
