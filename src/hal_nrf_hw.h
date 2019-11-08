@@ -66,7 +66,7 @@ while(0)
  //call timer init and define it somewhre, call the function here.
 #define CE_PULSE() do { \
   CE_HIGH();\
-  timerDelay();\
+  HAL_Delay(1);\
   CE_LOW();  \
   } while(0)
 

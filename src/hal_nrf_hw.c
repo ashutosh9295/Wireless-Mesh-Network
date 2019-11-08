@@ -22,8 +22,9 @@ extern SPI_HandleTypeDef hspi3;
 
 uint8_t hal_nrf_rw(uint8_t value)
 {
-  uint8_t RxData;
-  HAL_SPI_TransmitReceive(&hspi3, &value, &RxData, 1, 1000);
-  
-  return RxData;
+  //uint8_t RxData;
+  //HAL_SPI_TransmitReceive(&hspi3, &value, &RxData, 1, 1000);
+  HAL_SPI_Transmit(&hspi3, &value, 1, 0);
+  //return RxData;
+  return 0;
 }

@@ -41,11 +41,11 @@ uint16_t delayVal=10;
   }	
 }
 
-void TIM1_TRG_COM_TIM17_IRQHandler(void)
-{
-  HAL_TIM_IRQHandler(&tim17);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5 ,0);
-}
+// void TIM1_TRG_COM_TIM17_IRQHandler(void)
+// {
+//   HAL_TIM_IRQHandler(&tim17);
+//   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5 ,0);
+// }
 
 
 ParserReturnVal_t CmdtimerInit(int action)
