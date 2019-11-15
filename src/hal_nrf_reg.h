@@ -25,14 +25,6 @@
 /** @name - Instruction Set - */
 //@{
 
-#define Tx 1
-#define Rx 0
-#define Payload_Length 4
-
-#define RX_FIFO_EMPTY_MASK 0x01
-#define RX_DR_MASK 0x40
-#define TX_DR_MASK 0x20
-
 /* nRF24L01 Instruction Definitions */
 #define RD_REG 0x00
 #define NRF_WRITE_REG     0x20  /**< Register write command */

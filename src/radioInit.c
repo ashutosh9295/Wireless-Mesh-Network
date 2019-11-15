@@ -8,7 +8,7 @@
 #include "hal_nrf_reg.h"
 #include "target_includes.h"
 
-static const uint8_t address[HAL_NRF_AW_5BYTES] = {0x22,0x33, 0x44,0x55,0x01};
+static const uint8_t address[HAL_NRF_AW_5BYTES] = {0x23,0x43, 0x84,0x5A,0xF1};
 void radio_set_status (radio_status_t new_status);
 
 static radio_status_t status;
@@ -73,16 +73,59 @@ ParserReturnVal_t CmdRadioInit(int mode)
 
   if (length == 0){
       opMode = HAL_NRF_PTX;
+      printf("Radio Transmission Initialised\n");
   }
   else if (length == 1){
       opMode = HAL_NRF_PRX;
+      printf("Radio Receive Initialised\n");
   }
 
   radio_init(address, opMode);
-  printf("Radio Initialised\n");
+  
   
   return CmdReturnOk;
 }
 
 ADD_CMD("radioInit",CmdRadioInit,"Initialise Radio, set 0 for transmission or 1 for receive")
 
+ParserReturnVal_t CmdReadReg(int mode)
+{
+  int rc;
+  uint16_t length;
+  uint8_t val;
+  
+  if(mode != CMD_INTERACTIVE) return CmdReturnOk;
+  rc = fetch_uint16_arg(&length);
+  if(rc) {
+    printf("Must specify data value to the user\n");
+    return CmdReturnBadParameter1;
+  }
+
+  val = hal_nrf_read_reg(length);
+  printf("Read Reg: %X, VAL= %X\n", length, val);  
+  
+  return CmdReturnOk;
+}
+
+ADD_CMD("radioReg",CmdReadReg,"Initialise Radio, set 0 for transmission or 1 for receive")
+
+ParserReturnVal_t CmdRadioVerify(int mode)
+{
+  
+  uint8_t val;
+  for (int i = 0; i< 0x7f; i++)
+  {
+    hal_nrf_write_reg(RF_CH, i);  
+    val = hal_nrf_read_reg(RF_CH);  
+    if(i != val)
+    {
+      printf("mismatch data exp :%02x  real ; %02x\r\n", i, val);
+    }
+
+    else printf(".");
+  }
+   
+  return CmdReturnOk;
+}
+
+ADD_CMD("radioverify",CmdRadioVerify,"Initialise Radio, set 0 for transmission or 1 for receive")
