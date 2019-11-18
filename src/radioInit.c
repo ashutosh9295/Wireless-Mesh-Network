@@ -20,7 +20,7 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
   hal_nrf_open_pipe(HAL_NRF_PIPE0, false);       // Open pipe0, without/autoack
 
   hal_nrf_set_crc_mode(HAL_NRF_CRC_16BIT);       // Operates in 16bits CRC mode
-  hal_nrf_set_auto_retr(0, 10);                  // Disables auto retransmit
+  hal_nrf_set_auto_retr(0, 250);                  // Disables auto retransmit
 
   hal_nrf_set_address_width(HAL_NRF_AW_5BYTES);  // 5 bytes address width
   hal_nrf_set_address(HAL_NRF_TX, address);      // Set device's addresses
@@ -34,7 +34,9 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
   else
   {
     hal_nrf_set_operation_mode(HAL_NRF_PRX);     // Enter RX mode
-    hal_nrf_set_rx_pload_width((uint8_t)HAL_NRF_PIPE0, 10);
+    printf("radio init receive op mode\n");
+    hal_nrf_set_rx_pload_width((uint8_t)HAL_NRF_PIPE0, 5);
+    printf("radio init receive pl width\n");
                                                  // Pipe0 expect 
                                                  // PAYLOAD_LENGTH byte payload
                                                  // PAYLOAD_LENGTH in radio.h
@@ -51,6 +53,10 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
                                                  // and nRF24E1
 
   radio_set_status (RF_IDLE);                    // Radio now ready
+  timerInit();
+  if(operational_mode == HAL_NRF_PRX){
+    CE_HIGH();
+  }
 }                                                
 
 void radio_set_status (radio_status_t new_status)
@@ -122,9 +128,11 @@ ParserReturnVal_t CmdRadioVerify(int mode)
       printf("mismatch data exp :%02x  real ; %02x\r\n", i, val);
     }
 
-    else printf(".");
+    else 
+    printf(".");
   }
-   
+  
+  printf("\n");
   return CmdReturnOk;
 }
 

@@ -24,5 +24,6 @@ uint8_t hal_nrf_rw(uint8_t value)
 {
   uint8_t RxData;
   HAL_SPI_TransmitReceive(&hspi3, &value, &RxData, 1, 1000);
+  printf("sending and received val - %02X, rec val - %02X \n", value, RxData);
   return RxData;
 }

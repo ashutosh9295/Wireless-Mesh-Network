@@ -13,8 +13,8 @@ void timerInit(void)
   __HAL_RCC_TIM17_CLK_ENABLE();
   
   /* Enabling interrupt commands*/ 
-  HAL_NVIC_SetPriority(TIM1_TRG_COM_TIM17_IRQn,0,0);
-  HAL_NVIC_EnableIRQ(TIM1_TRG_COM_TIM17_IRQn);
+  /*HAL_NVIC_SetPriority(TIM1_TRG_COM_TIM17_IRQn,0,0);
+  HAL_NVIC_EnableIRQ(TIM1_TRG_COM_TIM17_IRQn);*/
 
   /* Initialise Timer with HAL*/
   tim17.Instance = TIM17;
@@ -28,15 +28,11 @@ void timerInit(void)
   HAL_TIM_Base_Start_IT(&tim17); /* enabling the interrupt*/
 }
 
-void timerDelay(void)
+void timerDelay(uint16_t delayVal)
 {
-uint16_t delayVal=10;
   TIM17->CNT = 0;       /* Reset counter */
   while((TIM17->CNT)< delayVal) // Used a local variable timertick to increase the delay value so that we can have a delay of more than 65535 us.
 	{ 
-	if(TIM17->CNT == delayVal){
-	TIM17->CNT = 0;
-	}
 	asm volatile ("nop\n");
   }	
 }

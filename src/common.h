@@ -159,7 +159,7 @@ void my_Loop(void);
 void my_Init(void);
 
 void timerInit(void);
-void timerDelay(void);
+void timerDelay(uint16_t delayVal);
 
 void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode);
 
