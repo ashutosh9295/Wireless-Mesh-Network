@@ -11,6 +11,16 @@
 static const uint8_t address[HAL_NRF_AW_5BYTES] = {0x23,0x43, 0x84,0x5A,0xF1};
 void radio_set_status (radio_status_t new_status);
 
+uint32_t deviceID()
+{
+    uint32_t firstBit= 0;
+    firstBit = HAL_GetUIDw0();
+    printf("FIRTBIT VAL - %ld\n", firstBit);
+    return firstBit;
+}
+
+uint32_t node_ID_1, node_ID_2 = 0;
+
 static radio_status_t status;
 
 void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode)
@@ -57,12 +67,31 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
   if(operational_mode == HAL_NRF_PRX){
     CE_HIGH();
   }
-}                                                
+
+uint32_t temp = 0;
+temp = deviceID();
+printf("temp - %ld\n", temp);
+  if (temp == 1343492)
+  {
+    node_ID_1 = 1;
+    printf("NODE ID - 1\n");
+  }                                                
+  else if(temp == 884747)
+  {
+    node_ID_2 = 2;
+    printf("NODE ID - 2\n");
+  }
+  else{
+    node_ID_1 = 0;
+    node_ID_2 = 0;
+  }
+}
 
 void radio_set_status (radio_status_t new_status)
 {
   status = new_status;
 }
+
 
 ParserReturnVal_t CmdRadioInit(int mode)
 {
@@ -137,3 +166,11 @@ ParserReturnVal_t CmdRadioVerify(int mode)
 }
 
 ADD_CMD("radioverify",CmdRadioVerify,"Initialise Radio, set 0 for transmission or 1 for receive")
+
+ParserReturnVal_t CmdDecode11(int mode)
+{
+  deviceID();
+  return CmdReturnOk;
+}
+
+ADD_CMD("DecDevice",CmdDecode11,"Initialise Radio, set 0 for transmission or 1 for receive")

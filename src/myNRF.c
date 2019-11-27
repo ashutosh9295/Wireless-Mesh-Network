@@ -59,9 +59,7 @@ ParserReturnVal_t CmdReceivePacket(int mode)
       printf("%X\n", rxData_P[i]);
     }
 
-  //  for (uint8_t i = 0; i < 32; i++){
-  //     printf("%02X ", rxData_P[i]);
-  //  }
+  printf("%s\n", rxData_P);
   return CmdReturnOk;
 }
 
