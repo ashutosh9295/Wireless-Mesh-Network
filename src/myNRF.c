@@ -16,7 +16,7 @@ void sendDataPacket(uint8_t *packet, uint8_t packetLength)
 
 uint16_t receiveDataPacket(uint8_t *packet) //change the type to uint16 or 32 and then return the length
 {
-  uint16_t payload_length = 0;
+   uint16_t payload_length = 0;
    uint16_t PLL = hal_nrf_read_rx_pload(packet);
    payload_length = (PLL & 0x00FF); // take the bottom 8 bit
    printf("%d -- payload\n",payload_length);

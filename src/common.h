@@ -162,6 +162,10 @@ void timerInit(void);
 void timerDelay(uint16_t delayVal);
 
 void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mode);
+void routing(void);
+void sendDataPacket(uint8_t *packet, uint8_t packetLength);
+uint16_t receiveDataPacket(uint8_t *packet); 
+
 
 #endif
 
