@@ -7,6 +7,8 @@
 #include "hal_nrf.h"
 #include "hal_nrf_reg.h"
 
+uint32_t deviceID(void);
+
 void sendDataPacket(uint8_t *packet, uint8_t packetLength) 
 {
   hal_nrf_write_tx_pload(packet, packetLength);
@@ -27,20 +29,27 @@ ParserReturnVal_t CmdSendPacket(int mode)
 {
   char rc, *data;
   uint8_t length;
-
+  uint8_t  id;
   if(mode != CMD_INTERACTIVE) return CmdReturnOk;
 
   rc = fetch_cmd_args(&data);
+  id = data[5]-'0';
+
+  if(id > 4  || id <= 0)
+  {
+    printf("Must specify last char as 1 or 2 or 3 depending on NODE ID.\n");
+    return CmdReturnBadParameter1;
+  }
   if(rc) {
     printf("Must specify data value to the user\n");
     return CmdReturnBadParameter1;
   }
-
+  
 
   length = strlen(data);
   
   sendDataPacket((uint8_t*)data, length);
-  printf("Data = %s & Length = %i\n\r", data, length);
+  printf("Data sent is = %s & Length of data = %i\n\r", data, length);
   return CmdReturnOk;
 }
 
@@ -55,11 +64,22 @@ ParserReturnVal_t CmdReceivePacket(int mode)
 
 // create a for loop here
   length = receiveDataPacket(rxData_P);
-  for (uint8_t i = 0; i < length; i++){
-      printf("%X\n", rxData_P[i]);
-    }
 
-  printf("%s\n", rxData_P);
+  if(rxData_P[5] == 0x31){
+    printf("NODE 1 is ALIVE\n");
+  }
+  else if(rxData_P[5] == 0x32){
+    printf("NODE 2 is ALIVE\n");
+  }
+  else if(rxData_P[5] == 0x33){
+    printf("NODE 3 is ALIVE\n");
+  }
+  printf("Data in hex:\n");
+  for (uint8_t i = 0; i < length-1; i++){
+      printf("%X  ", rxData_P[i]);
+    }
+  printf("\n");
+  printf("Data Received - %s\n", rxData_P);
   return CmdReturnOk;
 }
 

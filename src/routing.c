@@ -17,17 +17,13 @@ struct routing_table
     numberOfHops[1];
 };
 
-struct routing_table route[2] = {0};
-void sendRouting(void)
-{
-    // uint8_t r_buff[32] = 0;
-    // uint8_t len = 0;
-
+struct routing_table route[1] = {0};
+void sendRouting(void){
 
     if(sendTicks){
         sendTicks--;
         if(sendTicks == 150000){
-            for(uint8_t i=0; i=1; i++){
+            for(uint8_t i=0; i<=1; i++){
                 sendDataPacket(route(i), sizeof(route));
             }
         sendTicks = 180000;
@@ -62,11 +58,14 @@ void receiveRouting(void)
             route[i].ownNodeID = routing[i].ownID;
             route[i].commNodeId = routing[i].otherID;
             route[i].numberOfHops = routing[i].hopsCount;
-        }
+        }   
         receiveTicks = 180000;
     }
 }
 
 void updateRouting(void){
-    if
+    if(route.numberOfHops > 15){
+        route.ownNodeID = 0;
+        route.commNodeId = 0;
+    }
 }

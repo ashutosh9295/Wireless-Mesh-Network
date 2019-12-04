@@ -583,7 +583,7 @@ void hal_nrf_write_multibyte_reg(const uint8_t reg, const uint8_t *pbuf, uint8_t
     default:
       break;
   }
-  printf("length snd write multibyte reg - %X, length - %d\n", reg, length);
+  //printf("length snd write multibyte reg - %X, length - %d\n", reg, length);
   while(length--)
   {
     hal_nrf_rw(*pbuf++);

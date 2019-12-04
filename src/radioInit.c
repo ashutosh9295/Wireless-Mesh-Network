@@ -15,11 +15,11 @@ uint32_t deviceID()
 {
     uint32_t firstBit= 0;
     firstBit = HAL_GetUIDw0();
-    printf("FIRTBIT VAL - %ld\n", firstBit);
+    //printf("FIRTBIT VAL - %ld\n", firstBit);
     return firstBit;
 }
 
-uint32_t node_ID_1, node_ID_2 = 0;
+uint32_t node_ID_1, node_ID_2, node_ID_3 = 0;
 
 static radio_status_t status;
 
@@ -44,9 +44,9 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
   else
   {
     hal_nrf_set_operation_mode(HAL_NRF_PRX);     // Enter RX mode
-    printf("radio init receive op mode\n");
-    hal_nrf_set_rx_pload_width((uint8_t)HAL_NRF_PIPE0, 5);
-    printf("radio init receive pl width\n");
+    //printf("radio init receive op mode\n");
+    hal_nrf_set_rx_pload_width((uint8_t)HAL_NRF_PIPE0, 6);
+    //printf("radio init receive pl width\n");
                                                  // Pipe0 expect 
                                                  // PAYLOAD_LENGTH byte payload
                                                  // PAYLOAD_LENGTH in radio.h
@@ -70,7 +70,7 @@ void radio_init (const uint8_t *address, hal_nrf_operation_mode_t operational_mo
 
 uint32_t temp = 0;
 temp = deviceID();
-printf("temp - %ld\n", temp);
+//printf("temp - %ld\n", temp);
   if (temp == 1343492)
   {
     node_ID_1 = 1;
@@ -81,9 +81,14 @@ printf("temp - %ld\n", temp);
     node_ID_2 = 2;
     printf("NODE ID - 2\n");
   }
+  else if(temp == 393216){
+    node_ID_3 = 3;
+    printf("NODE ID - 3\n");
+  }
   else{
     node_ID_1 = 0;
     node_ID_2 = 0;
+    node_ID_3 = 0;
   }
 }
 

@@ -1,4 +1,4 @@
-3/**
+/**
   ******************************************************************************
   * @file    stm32f3xx_it.c
   * @brief   Interrupt Service Routines.
@@ -42,7 +42,7 @@ void TaskingTickHandler(void);
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-void sendRouting(void);
+// void sendRouting(void);
 
 /******************************************************************************/
 /*            Cortex-M4 Processor Interruption and Exception Handlers         */ 
@@ -62,7 +62,7 @@ void SysTick_Handler(void)
   my_Tick();
   TaskingTickHandler();
   /* USER CODE END SysTick_IRQn 1 */
-  sendRouting();
+  // sendRouting();
 }
 
 /******************************************************************************/

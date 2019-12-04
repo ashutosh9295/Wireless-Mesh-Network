@@ -166,6 +166,8 @@ void routing(void);
 void sendDataPacket(uint8_t *packet, uint8_t packetLength);
 uint16_t receiveDataPacket(uint8_t *packet); 
 
+uint32_t deviceID(void);
+
 
 #endif
 

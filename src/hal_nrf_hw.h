@@ -30,7 +30,6 @@
 #define CSN_LOW() \
 do {\
 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, 0);\
-printf("CSN LOW\n");\
 }\
 while(0)
 
@@ -40,7 +39,6 @@ while(0)
 #define CSN_HIGH() \
 do {\
 HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, 1);\
-printf("CSN High\n");\
 }\
 while(0)
 
